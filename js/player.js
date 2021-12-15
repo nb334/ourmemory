@@ -24,13 +24,13 @@
 	if (isShuffle && shuffle_array != undefined && playlist.length === (shuffleArray=JSON.parse(shuffle_array)).length) {
 		currentTrack = shuffleArray[0];
 		shuffleIndex = 0;
-	    $('#QPlayer .cover').attr('title', '鐐瑰嚮鍏抽棴闅忔満鎾斁');
+	    $('#QPlayer .cover').attr('title', '点击关闭随机播放');
 	} else {
 		isShuffle = false;
-	    $('#QPlayer .cover').attr('title', '鐐瑰嚮寮€鍚殢鏈烘挱鏀�');
+	    $('#QPlayer .cover').attr('title', '点击开启随机播放');
 	}
 
-	//鍒ゆ柇鏄惁鏄剧ず婊氬姩鏉�
+	//判断是否显示滚动条
 	var totalHeight = 0;
 	for (var i = 0; i < playlist.length; i++){
 		totalHeight += ($('#playlist li').eq(i).height() + 6);
@@ -54,7 +54,7 @@
 	    }
 		$('.playback').addClass('playing');
 		timeout = setInterval(updateProgress, 500);
-		//瓒呰繃鏄剧ず鏍忚繍琛岃窇椹伅
+		//超过显示栏运行跑马灯
 		if(isExceedTag()) {
 			if (isInitMarquee) {
 				initMarquee();
@@ -106,14 +106,14 @@
 	// Shuffle
 	var shufflePlay = function(i){
 		if (i === 1) {
-		//涓嬩竴棣�
+		//下一首
 		    if (++shuffleIndex === shuffleArray.length) {
 		    	shuffleIndex = 0;
 		    }
 		    currentTrack = shuffleArray[shuffleIndex];
 
 		} else if (i === 0) {
-		//涓婁竴棣�
+		//上一首
 		    if (--shuffleIndex < 0) {
 		    	shuffleIndex = shuffleArray.length - 1;
 		    }
@@ -147,7 +147,7 @@
 	var loadMusic = function(i){
 		var item = playlist[i];
 		while (item.mp3 == "") {
-	        showNotification('姝屾洸鍦板潃涓虹┖锛屽凡鑷姩璺宠繃');
+	        showNotification('歌曲地址为空，已自动跳过');
 			if (isShuffle) {
 				if (++shuffleIndex === shuffleArray.length) {
 			    	shuffleIndex = 0;
@@ -228,7 +228,7 @@
 		var mA = $("#QPlayer");
 		if ($('.ssBtn .adf').hasClass('on') === false) {
 			if (isFirstPlay) {
-			    setTimeout("showTips('#player .cover','鐐瑰嚮灏侀潰寮€鍚�(鍏抽棴)闅忔満鎾斁', " + function(){setTimeout("showTips('#player .ctrl .musicTag','鐐瑰嚮鎷栧姩鏍囬鏍忓揩杩�(蹇€€)')", 1000)} + ");", 500);
+			    setTimeout("showTips('#player .cover','点击封面开启(关闭)随机播放', " + function(){setTimeout("showTips('#player .ctrl .musicTag','点击拖动标题栏快进(快退)')", 1000)} + ");", 500);
 			    isFirstPlay = !isFirstPlay;
 			    localStorage.qplayer = 'false';
 			}
@@ -243,8 +243,8 @@
 	$("#player .cover").on('click',function(){
 		isShuffle = !isShuffle;
 		if (isShuffle) {
-	        $("#player .cover").attr("title","鐐瑰嚮鍏抽棴闅忔満鎾斁");
-	        showNotification('宸插紑鍚殢鏈烘挱鏀�');
+	        $("#player .cover").attr("title","点击关闭随机播放");
+	        showNotification('已开启随机播放');
 
 			var temp = [];
 			for (var i = 0; i < playlist.length; i++) {
@@ -259,8 +259,8 @@
 			}
 			localStorage.qplayer_shuffle_array = JSON.stringify(shuffleArray);
 		} else {
-	        $("#player .cover").attr("title","鐐瑰嚮寮€鍚殢鏈烘挱鏀�");
-	        showNotification('宸插叧闂殢鏈烘挱鏀�');
+	        $("#player .cover").attr("title","点击开启随机播放");
+	        showNotification('已关闭随机播放');
 	        localStorage.removeItem('qplayer_shuffle_array');
 		}
 		localStorage.qplayer = isShuffle;
@@ -271,7 +271,7 @@
     $('#player .ctrl .musicTag').mousedown(function(event){
     	startX = event.screenX;
     }).mousemove(function(event){
-    	//榧犳爣宸﹂敭
+    	//鼠标左键
     	if (event.which === 1) {
 	    	endX = event.screenX;
 	    	var seekRange = Math.round((endX - startX) / 678 * 100);
@@ -307,7 +307,7 @@ function initMarquee(){
 	});
 }
 
-//妫€娴嬫爣棰樺拰浣滆€呬俊鎭€诲搴︽槸鍚﹁秴鍑烘挱鏀惧櫒锛岃秴杩囧垯杩斿洖true寮€鍚窇椹伅
+//检测标题和作者信息总宽度是否超出播放器，超过则返回true开启跑马灯
 function isExceedTag() {
 	var isExceedTag = false;
 	if ($('.musicTag strong').width() + $('.musicTag span').width() + $('.musicTag .artist').width() > $('.musicTag').width()) {
@@ -320,11 +320,11 @@ function isExceedTag() {
 function shuffle(array) {
     var m = array.length,
         t, i;
-    // 濡傛灉杩樺墿鏈夊厓绱犫€�
+    // 如果还剩有元素…
     while (m) {
-        // 闅忔満閫夊彇涓€涓厓绱犫€�
+        // 随机选取一个元素…
         i = Math.floor(Math.random() * m--);
-        // 涓庡綋鍓嶅厓绱犺繘琛屼氦鎹�
+        // 与当前元素进行交换
         t = array[m];
         array[m] = array[i];
         array[i] = t;
@@ -334,15 +334,15 @@ function shuffle(array) {
 
 function showNotification(info) {
 	isShowNotification = true;
-	//鍒ゆ柇閫氱煡鏄惁瀛樺湪锛屽瓨鍦ㄥ氨绉婚櫎
+	//判断通知是否存在，存在就移除
     if ($('.qplayer-notification').length>0) {
     	$('.qplayer-notification').remove();
     	clearTimeout(autoClearTimer);
     	clearTimeout(autoShowTimer);
     }
-	$('body').append('<div class="qplayer-notification animation-target"><span class="qplayer-notification-icon">i</span><span class="body" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px;"><span class="message"></span></span><a class="close" href="#" onclick="closeNotification();return false;">脳</a><div style="clear: both"></div>');
+	$('body').append('<div class="qplayer-notification animation-target"><span class="qplayer-notification-icon">i</span><span class="body" style="box-shadow: rgba(0, 0, 0, 0.0980392) 0px 0px 5px;"><span class="message"></span></span><a class="close" href="#" onclick="closeNotification();return false;">×</a><div style="clear: both"></div>');
 	$('.qplayer-notification .message').text(info);
-	//鐢╳idth:auto鏉ヨ嚜鍔ㄨ幏鍙栭€氱煡鏍忓搴�
+	//用width:auto来自动获取通知栏宽度
 	var width = $('.qplayer-notification').css({"opacity":"0", "width":"auto"}).width() + 20;
 	$('.qplayer-notification').css({"width":"50px","opacity":"1"});
 	
@@ -374,13 +374,13 @@ function closeNotification() {
 }
 
 /*
-*div: 瑕佸湪鍏朵笂闈㈡樉绀簍ip鐨刣iv
-*info: tip鍐呭
-*func: 涓嶅啀鎻愮ず鎸夐挳鐨刢lick缁戝畾鍑芥暟
+*div: 要在其上面显示tip的div
+*info: tip内容
+*func: 不再提示按钮的click绑定函数
 */
 function showTips(div, info, func) {
 	var box_height = 100;
-	$('body').append('<div class="qplayer_tips"><span class="tips_arrow"></span><span class="info" style="display:none">' + info + '</span><button class="tips_button" onclick="removeTips()">涓嶅啀鎻愮ず</button></div>');
+	$('body').append('<div class="qplayer_tips"><span class="tips_arrow"></span><span class="info" style="display:none">' + info + '</span><button class="tips_button" onclick="removeTips()">不再提示</button></div>');
 	$('.qplayer_tips').css({"top":$(div).offset().top-box_height-30-15, "left": $(div).offset().left-28});
 	$('.qplayer_tips').css({"height":box_height,"transition":"all .5s ease-in-out"});
 	$('.qplayer_tips .info').delay(500).fadeIn();
