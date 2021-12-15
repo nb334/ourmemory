@@ -241,18 +241,18 @@ to {
 }
 
 
-/* 璁剧疆婊氬姩鏉＄殑鏍峰紡 */
+/* 设置滚动条的样式 */
 #QPlayer ::-webkit-scrollbar {
     width: 3px !important;
 }
 
-/* 婊氬姩妲� */
+/* 滚动槽 */
 #QPlayer ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
     border-radius: 10px !important;
 }
 
-/* 婊氬姩鏉℃粦鍧� */
+/* 滚动条滑块 */
 #QPlayer ::-webkit-scrollbar-thumb {
     border-radius: 10px !important;
     background: rgba(0,0,0,0.1) !important;
@@ -436,7 +436,7 @@ to {
   z-index: 9999999;
 }
 
-/*绠牠涓�-閭婃*/
+/*箭頭下-邊框*/
 .qplayer_tips .tips_arrow{
   border-width:0;
   border-style:solid;
