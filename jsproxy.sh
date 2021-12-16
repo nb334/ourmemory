@@ -5,9 +5,9 @@
 JSPROXY_VER=0.1.0
 OPENRESTY_VER=1.15.8.1
 
-SRC_URL=https://proxy.lightly.ml:443/https/raw.githubusercontent.com/EtherDream/jsproxy/$JSPROXY_VER
-BIN_URL=https://proxy.lightly.ml:443/https/raw.githubusercontent.com/EtherDream/jsproxy-bin/master
-ZIP_URL=https://proxy.lightly.ml:443/https/codeload.github.com/EtherDream/jsproxy/tar.gz
+SRC_URL=https://raw.githubusercontent.com/EtherDream/jsproxy/$JSPROXY_VER
+BIN_URL=https://raw.githubusercontent.com/EtherDream/jsproxy-bin/master
+ZIP_URL=https://codeload.github.com/EtherDream/jsproxy/tar.gz
 
 SUPPORTED_OS="Linux-x86_64"
 OS="$(uname)-$(uname -m)"
@@ -23,8 +23,8 @@ DOMAIN_SUFFIX=(
 )
 
 GET_IP_API=(
-  https://proxy.lightly.ml:443/https/api.ipify.org
-  https://proxy.lightly.ml:443/https/bot.whatismyipaddress.com/
+  https://api.ipify.org
+  https://bot.whatismyipaddress.com/
 )
 
 COLOR_RESET="\033[0m"
@@ -77,7 +77,6 @@ gen_cert() {
   fi
 
   log "安装 acme.sh 脚本 ..."
-#  curl https://proxy.lightly.ml:443/https/raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh | INSTALLONLINE=1  sh
   curl https://get.acme.sh | sh -s email=my@example.com
 
   local acme=~/.acme.sh/acme.sh
@@ -244,7 +243,7 @@ main() {
   local line=$(iptables -t nat -nL --line-numbers | grep "tcp dpt:80 redir ports 8080")
   iptables -t nat -D PREROUTING ${line%% *}
 
-  log "安装完成。后续维护参考 https://proxy.lightly.ml:443/https/github.com/EtherDream/jsproxy"
+  log "安装完成。后续维护参考 https://github.com/EtherDream/jsproxy"
 }
 
 
