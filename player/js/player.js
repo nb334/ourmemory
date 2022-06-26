@@ -139,7 +139,7 @@
             async: true,
             type: "GET",
             success: function(data) {
-                var newaudio = $("<audio>").html('<source src="' + data + '"><source src="' + item.ogg + '">').appendTo("#player");
+                var newaudio = $("<audio>").html('<source src="' + data["data"]["url"] + '"><source src="' + item.ogg + '">').appendTo("#player");
                 $(".cover").html('<img src="' + item.cover + '" alt="' + item.album + '">');
                 $(".musicTag").html("<strong>" + item.title + '</strong><span> - </span><span class="artist">' + item.artist + "</span>");
                 $("#playlist li").removeClass("playing").eq(i).addClass("playing");
