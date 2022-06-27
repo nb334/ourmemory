@@ -182,3 +182,96 @@ var playlist = [{
     mp3: "https://onedrive.lightly.ml/api?path=/music/7%20Years%20Lukas%20Graham.mp3&raw=true",
     cover: "player/img/3275445140690155.jpg"
 }];
+
+// 全民k歌
+var playlist = [{
+    title: "你还要我怎样",
+    artist: "于沃冉",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=MG8sSaMdrLFQuMdb",
+    cover: "player/img/你还要我怎样.jpg"
+}, {
+    title: "刚刚好",
+    artist: "于沃冉",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=rcKHk_rlM7WRRrrz",
+    cover: "player/img/刚刚好.jpg"
+}, {
+    title: "刚刚好",
+    artist: "合唱",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=skgMcVsDH3iFtsBB",
+    cover: "player/img/刚刚好.jpg"
+}, {
+    title: "去流浪",
+    artist: "合唱",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=3A0LQB3TvsOXz3VJ",
+    cover: "player/img/去流浪.jpg"
+}, {
+    title: "情侣装",
+    artist: "于皮合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=aXdVCMa8_xNhJaeP",
+    cover: "player/img/情侣装.jpg"
+}, {
+    title: "意外",
+    artist: "于王封合_贾猫叫",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=V1DaqsVgpBmPkVTo",
+    cover: "player/img/意外.jpg"
+}, {
+    title: "暧昧",
+    artist: "于沃冉",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=Z2Jem6Z79lqCGZxo",
+    cover: "player/img/暧昧.jpg"
+}, {
+    title: "暧昧",
+    artist: "合唱",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=1VwX_k1OCPT9X11i",
+    cover: "player/img/暧昧.jpg"
+}, {
+    title: "有何不可",
+    artist: "于皮贾合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=Q7Wf3jQ2ncK7qQqR",
+    cover: "player/img/有何不可.jpg"
+}, {
+    title: "何必要那么多的借口",
+    artist: "贾皮合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=IRv6FeI-0USCRI-h",
+    cover: "player/img/未知.jpg"
+}, {
+    title: "江湖",
+    artist: "于皮合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=u-YjxfuRPC5ITuu4",
+    cover: "player/img/江湖.jpg"
+}, {
+    title: "爱情转移",
+    artist: "贾于封合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=_qlp1r_KaJ2tY_gy",
+    cover: "player/img/爱情转移.jpg"
+}, {
+    title: "说谎",
+    artist: "于王合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=E5C4dbESwY-KjEG1",
+    cover: "player/img/说谎.jpg"
+}, {
+    title: "何必要那么多的借口",
+    artist: "贾皮合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=FoniINFhWyMxAFz1",
+    cover: "player/img/预谋.jpg"
+}, {
+    title: "风云诀",
+    artist: "于王合",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=CpEqaSCb1uelHCNO",
+    cover: "player/img/风云诀.jpg"
+}, {
+    title: "认错",
+    artist: "合唱",
+    mp3: "http://node.kg.qq.com/cgi/fcgi-bin/fcg_get_play_url?shareid=skgMcVsDH3iXesJv",
+    cover: "player/img/认错.jpg"
+},{
+    title: "起风了",
+    artist: "买辣椒也用券",
+    mp3: "https://music.163.com/song/media/outer/url?id=1330348068.mp3",
+    cover: "player/img/109951163699673355.jpg",
+},{
+    title: "7 years",
+    artist: "Lukas",
+    mp3: "https://onedrive.lightly.ml/api?path=/music/7%20Years%20Lukas%20Graham.mp3&raw=true",
+    cover: "player/img/3275445140690155.jpg"
+}];
