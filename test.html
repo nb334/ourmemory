@@ -1,3 +1,553 @@
-<audio>
-    <source src="https://easul.freecluster.eu/lanzou_origin.php?url=https://www.lanzout.com/iHSoW06x3z1e&type=down">
-</audio>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>nb334</title>
+    <link rel="icon" href="specialEffect/img/logo_32.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="specialEffect/img/logo_32.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="player/css/player.css?v=1">
+    <style>
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            background-color: #000000;
+            margin: 0;
+            font-family: Helvetica, sans-serif;
+            overflow: hidden
+        }
+
+        a {
+            color: #ffffff
+        }
+
+        #info {
+            position: absolute;
+            width: 100%;
+            color: #ffffff;
+            padding: 5px;
+            font-family: Monospace;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 1
+        }
+
+        #menu {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center
+        }
+
+        .element {
+            width: 100px;
+            height: 100px;
+            box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.5);
+            border: 1px solid rgba(127, 255, 255, 0.25);
+            text-align: center;
+            cursor: default
+        }
+
+        .element:hover {
+            box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+            border: 1px solid rgba(127, 255, 255, 0.75)
+        }
+
+        .element img {
+            width: 100px;
+            height: 100px
+        }
+
+        .element.number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(127, 255, 255, 0.75)
+        }
+
+        .element.symbol {
+            position: absolute;
+            top: 40px;
+            left: 0px;
+            right: 0px;
+            font-size: 60px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.75);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.95)
+        }
+
+        .element.details {
+            position: absolute;
+            bottom: 15px;
+            left: 0px;
+            right: 0px;
+            font-size: 12px;
+            color: rgba(127, 255, 255, 0.75)
+        }
+
+        button {
+            color: rgba(127, 255, 255, 0.75);
+            background: transparent;
+            outline: 1px solid rgba(127, 255, 255, 0.75);
+            border: 0px;
+            padding: 5px 10px;
+            cursor: pointer
+        }
+
+        button:hover {
+            background-color: rgba(0, 255, 255, 0.5)
+        }
+
+        button:active {
+            color: #000000;
+            background-color: rgba(0, 255, 255, 0.75)
+        }
+
+        .show_info {
+            position: fixed;
+            background-color: rgba(0, 0, 0, .6);
+            padding: 10px;
+            width: 300px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 0#fff;
+            top: 30%
+        }
+
+        .show_info img {
+            display: block;
+            margin: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 0#888
+        }
+
+        .show_info.intro {
+            color: #fff;
+            text-indent: 20px;
+            margin-top: 10px;
+            height: 65px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical
+        }
+
+        .show_info.info_my {
+            text-align: center
+        }
+
+        .show_info.info_my>* {
+            display: inline-block !important;
+            vertical-align: middle
+        }
+
+        .show_info.info_my.info_mem {
+            color: #fff;
+            max-width: 120px
+        }
+
+        .show_info.info_my.info_mem>div {
+            text-align: left
+        }
+
+        .show_info.info_my.info_mem>div.nickname {
+            max-width: 120px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap
+        }
+    </style>
+    <link rel="stylesheet" href="specialEffect/css/animate.min.css">
+</head>
+
+<body>
+    <script src="common/js/jquery.min.js"></script>
+    <script src="specialEffect/js/three.js"></script>
+    <script src="specialEffect/js/tween.min.js"></script>
+    <script src="specialEffect/js/TrackballControls.js"></script>
+    <script src="specialEffect/js/CSS3DRenderer.js"></script>
+    <a href="https://www.nb334.cf/flow.html" style="text-decoration: underline;line-height: 3em;z-index: 4;position: fixed;left:1em;">查看流动特效</a>
+    <div id="container"></div>
+    <div id="info">那些年的334</div>
+    <div id="menu"><button id="table">表格</button><button id="sphere">球球</button><button id="helix">螺旋</button><button
+            id="grid">格子</button></div>
+    <div id="QPlayer">
+        <div id="pContent">
+            <div id="player"><span class="cover"></span>
+                <div class="ctrl">
+                    <div class="musicTag marquee"><strong>Title</strong><span>-</span><span class="artist">Artist</span>
+                    </div>
+                    <div class="progress">
+                        <div class="timer left">0:00</div>
+                        <div class="contr">
+                            <div class="rewind icon"></div>
+                            <div class="playback icon"></div>
+                            <div class="fastforward icon"></div>
+                        </div>
+                        <div class="right">
+                            <div class="liebiao icon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ssBtn">
+                <div class="adf"></div>
+            </div>
+        </div>
+        <ol id="playlist"></ol>
+    </div>
+    <!--<div class="show_info animated"style="display:none;"><div class="info_my"><img src="./img/cp17.jpg"height="75"width="75"/><div class="info_mem"><div class="nickname">小红</div><div class="id">ID:女朋友</div><div class="vote">性别：女</div></div></div><div class="intro">如果可以交换人生，就跟以前的自己交换吧，可以少些遗憾，而且，该在的人都在。</div></div>-->
+    <script>
+        var personArray = new Array;
+        var CurPersonNum = 0;
+        var _in = ['bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight', 'bounceInUp', 'fadeIn', 'fadeInDown',
+            'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp',
+            'fadeInUpBig', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight',
+            'slideInDown', 'slideInLeft', 'slideInRight'
+        ];
+        var _out = ['bounceOut', 'bounceOutDown', 'bounceOutLeft', 'bounceOutRight', 'bounceOutUp', 'fadeOut',
+            'fadeOutDown', 'fadeOutDownBig', 'fadeOutLeft', 'fadeOutLeftBig', 'fadeOutRight', 'fadeOutRightBig',
+            'fadeOutUp', 'fadeOutUpBig', 'rotateOut', 'rotateOutDownLeft', 'rotateOutDownRight', 'rotateOutUpLeft',
+            'rotateOutUpRight', 'slideOutDown', 'slideOutLeft', 'slideOutRight'
+        ];
+        for (var i = 0; i < 8; i++) {
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/0e010027822f9ef0d3df4e66ca33f732.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/ac248adf0ad6248498fc0cc5bb27004c.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/531c5a3ac22d193db96bfcf6f2cdd1e0.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/9e94ac8f6ca6fdb2b532f1a188f94094.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/ae1dae5f0934d51009d2a01792cad115.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/61b5b2d18f46416444fc6b428273f039.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/dfd2073c9392c15ea65e1565e99935c8.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/5cc38db0f2e77c2100cd6d5f6f6445ea.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/78c89306b703561ca70e67fa19ba4315.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/2bd6b03176757339a988b0621c0b21e8.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/727d2b4a392b6b8594f3967edd86dd40.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/d51b86a0a5d759b5131c00024b0b49e0.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/44f4ef4bd8db06abff6595fe9909c354.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/0e9c9f8a39d3b7f0f4679180f0c4b617.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/2e188f255da518895b4b8dab6e62c95a.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/a71291f9217938e912a706aac19e9138.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/91643e36f85614bbfb852ed4160ea3b1.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/bbde74378b00591583fd5cbcd20b7972.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/e32d0fcfa095384388c6de16d12a5a5b.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/da36e8c0a40ab286e256e9e45a8473b9.jpeg"
+            });
+            personArray.push({
+                image: "https://pic.rmb.bdstatic.com/bjh/ad9611b0f2b64876c072f54b2ce2dc9b.jpeg"
+            });
+        }
+        var table = new Array;
+        for (var i = 0; i < personArray.length; i++) {
+            table[i] = new Object();
+            if (i < personArray.length) {
+                table[i] = personArray[i];
+                table[i].src = personArray[i].thumb_image
+            }
+            table[i].p_x = i % 20 + 1;
+            table[i].p_y = Math.floor(i / 20) + 1
+        }
+        var camera, scene, renderer;
+        var controls;
+        var objects = [];
+        var targets = {
+            table: [],
+            sphere: [],
+            helix: [],
+            grid: []
+        };
+        init();
+        animate();
+
+        function init() {
+            camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = 3000;
+            scene = new THREE.Scene();
+            for (var i = 0; i < table.length; i++) {
+                var element = document.createElement('div');
+                element.className = 'element';
+                element.style.backgroundColor = 'rgba(0,127,127,' + (Math.random() * 0.5 + 0.25) + ')';
+                var img = document.createElement('img');
+                img.src = table[i].image;
+                element.appendChild(img);
+                var object = new THREE.CSS3DObject(element);
+                object.position.x = Math.random() * 4000 - 2000;
+                object.position.y = Math.random() * 4000 - 2000;
+                object.position.z = Math.random() * 4000 - 2000;
+                scene.add(object);
+                objects.push(object);
+                var object = new THREE.Object3D();
+                object.position.x = (table[i].p_x * 140) - 1330;
+                object.position.y = -(table[i].p_y * 180) + 990;
+                targets.table.push(object)
+            }
+            var vector = new THREE.Vector3();
+            var spherical = new THREE.Spherical();
+            for (var i = 0, l = objects.length; i < l; i++) {
+                var phi = Math.acos(-1 + (2 * i) / l);
+                var theta = Math.sqrt(l * Math.PI) * phi;
+                var object = new THREE.Object3D();
+                spherical.set(800, phi, theta);
+                object.position.setFromSpherical(spherical);
+                vector.copy(object.position).multiplyScalar(2);
+                object.lookAt(vector);
+                targets.sphere.push(object)
+            }
+            var vector = new THREE.Vector3();
+            var cylindrical = new THREE.Cylindrical();
+            for (var i = 0, l = objects.length; i < l; i++) {
+                var theta = i * 0.175 + Math.PI;
+                var y = -(i * 5) + 450;
+                var object = new THREE.Object3D();
+                cylindrical.set(900, theta, y);
+                object.position.setFromCylindrical(cylindrical);
+                vector.x = object.position.x * 2;
+                vector.y = object.position.y;
+                vector.z = object.position.z * 2;
+                object.lookAt(vector);
+                targets.helix.push(object)
+            }
+            for (var i = 0; i < objects.length; i++) {
+                var object = new THREE.Object3D();
+                object.position.x = ((i % 5) * 400) - 800;
+                object.position.y = (-(Math.floor(i / 5) % 5) * 300) + 500;
+                object.position.z = (Math.floor(i / 25)) * 200 - 800;
+                targets.grid.push(object)
+            }
+            renderer = new THREE.CSS3DRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.domElement.style.position = 'absolute';
+            document.getElementById('container').appendChild(renderer.domElement);
+            controls = new THREE.TrackballControls(camera, renderer.domElement);
+            controls.rotateSpeed = 0.5;
+            controls.minDistance = 500;
+            controls.maxDistance = 6000;
+            controls.addEventListener('change', render);
+            var ini = 0;
+            setInterval(function () {
+                ini = ini >= 3 ? 0 : ini;
+                ++ini;
+                switch (ini) {
+                    case 1:
+                        transform(targets.sphere, 1000);
+                        break;
+                    case 2:
+                        transform(targets.helix, 1000);
+                        break;
+                    case 3:
+                        transform(targets.grid, 1000);
+                        break
+                }
+            }, 8000);
+            var button = document.getElementById('table');
+            button.addEventListener('click', function (event) {
+                transform(targets.table, 1000)
+            }, false);
+            var button = document.getElementById('sphere');
+            button.addEventListener('click', function (event) {
+                transform(targets.sphere, 2000)
+            }, false);
+            var button = document.getElementById('helix');
+            button.addEventListener('click', function (event) {
+                transform(targets.helix, 2000)
+            }, false);
+            var button = document.getElementById('grid');
+            button.addEventListener('click', function (event) {
+                transform(targets.grid, 2000)
+            }, false);
+            transform(targets.table, 2000);
+            window.addEventListener('resize', onWindowResize, false)
+        }
+
+        function transform(targets, duration) {
+            TWEEN.removeAll();
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                var target = targets[i];
+                new TWEEN.Tween(object.position).to({
+                    x: target.position.x,
+                    y: target.position.y,
+                    z: target.position.z
+                }, Math.random() * duration + duration).easing(TWEEN.Easing.Exponential.InOut).start();
+                new TWEEN.Tween(object.rotation).to({
+                    x: target.rotation.x,
+                    y: target.rotation.y,
+                    z: target.rotation.z
+                }, Math.random() * duration + duration).easing(TWEEN.Easing.Exponential.InOut).start()
+            }
+            new TWEEN.Tween(this).to({}, duration * 2).onUpdate(render).start()
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            render()
+        }
+
+        function animate() {
+            scene.rotation.y += 0.003;
+            requestAnimationFrame(animate);
+            TWEEN.update();
+            controls.update();
+            render()
+        }
+
+        function render() {
+            renderer.render(scene, camera)
+        }
+    </script>
+    <script src="player/js/jquery.marquee.min.js"></script>
+    <script>
+        var playlist = [{
+            title: "你还要我怎样",
+            artist: "于沃冉",
+            mp3: "https://easul.freecluster.eu/lanzou_origin.php?url=https://www.lanzout.com/iHSoW06x3z1e&type=down",
+            cover: "player/img/你还要我怎样.jpg"
+        }, {
+            title: "刚刚好",
+            artist: "于沃冉",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E5%88%9A%E5%88%9A%E5%A5%BD_%E4%BA%8E.m4a&raw=true",
+            cover: "player/img/刚刚好.jpg"
+        }, {
+            title: "刚刚好",
+            artist: "合唱",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E5%88%9A%E5%88%9A%E5%A5%BD_%E5%90%88.m4a&raw=true",
+            cover: "player/img/刚刚好.jpg"
+        }, {
+            title: "去流浪",
+            artist: "合唱",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E5%8E%BB%E6%B5%81%E6%B5%AA_%E5%8E%9F%E5%94%B1.m4a&raw=true",
+            cover: "player/img/去流浪.jpg"
+        }, {
+            title: "情侣装",
+            artist: "于皮合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%83%85%E4%BE%A3%E8%A3%85_%E4%BA%8E%E7%9A%AE%E5%90%88.m4a&raw=true",
+            cover: "player/img/情侣装.jpg"
+        }, {
+            title: "意外",
+            artist: "于王封合_贾狗叫",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%84%8F%E5%A4%96_%E4%BA%8E%E7%8E%8B%E5%B0%81%E5%90%88_%E8%B4%BE%E7%8B%97%E5%8F%AB.m4a&raw=true",
+            cover: "player/img/意外.jpg"
+        }, {
+            title: "暧昧",
+            artist: "于沃冉",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%9A%A7%E6%98%A7_%E4%BA%8E.m4a&raw=true",
+            cover: "player/img/暧昧.jpg"
+        }, {
+            title: "暧昧",
+            artist: "合唱",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%9A%A7%E6%98%A7_%E5%90%88.m4a&raw=true",
+            cover: "player/img/暧昧.jpg"
+        }, {
+            title: "有何不可",
+            artist: "于皮贾合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%9C%89%E4%BD%95%E4%B8%8D%E5%8F%AF_%E4%BA%8E%E7%9A%AE%E8%B4%BE.m4a&raw=true",
+            cover: "player/img/有何不可.jpg"
+        }, {
+            title: "未知",
+            artist: "贾皮合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%9C%AA%E7%9F%A5_%E8%B4%BE%E7%9A%AE%E5%90%88.m4a&raw=true",
+            cover: "player/img/未知.jpg"
+        }, {
+            title: "江湖",
+            artist: "于皮合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E6%B1%9F%E6%B9%96_%E5%8E%9F%E5%94%B1.m4a&raw=true",
+            cover: "player/img/江湖.jpg"
+        }, {
+            title: "爱情转移",
+            artist: "贾于封合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E7%88%B1%E6%83%85%E8%BD%AC%E7%A7%BB_%E8%B4%BE%E4%BA%8E%E5%B0%81.m4a&raw=true",
+            cover: "player/img/爱情转移.jpg"
+        }, {
+            title: "说谎",
+            artist: "于王合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E8%AF%B4%E8%B0%8E_%E4%BA%8E%E7%8E%8B.m4a&raw=true",
+            cover: "player/img/说谎.jpg"
+        }, {
+            title: "预谋",
+            artist: "贾皮合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E9%A2%84%E8%B0%8B_%E8%B4%BE%E7%9A%AE%E5%90%88.m4a&raw=true",
+            cover: "player/img/预谋.jpg"
+        }, {
+            title: "风云诀",
+            artist: "于王合",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E9%A3%8E%E4%BA%91%E5%86%B3_%E4%BA%8E%E7%8E%8B.m4a&raw=true",
+            cover: "player/img/风云诀.jpg"
+        }, {
+            title: "认错",
+            artist: "合唱",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/memory/%E8%AE%A4%E9%94%99_%E5%90%88.m4a&raw=true",
+            cover: "player/img/认错.jpg"
+        },{
+            title: "起风了",
+            artist: "买辣椒也用券",
+            mp3: "https://music.163.com/song/media/outer/url?id=1330348068.mp3",
+            cover: "player/img/109951163699673355.jpg",
+        },{
+            title: "7 years",
+            artist: "Lukas",
+            mp3: "https://onedrive.lightly.ml/api?path=/music/7%20Years%20Lukas%20Graham.mp3&raw=true",
+            cover: "player/img/3275445140690155.jpg"
+        }];
+        var isRotate = true;
+        var autoplay = false;
+    </script>
+    <script src="player/js/player.js?v=1" charset="utf-8"></script>
+    <script>
+        function bgChange() {
+            var lis = $('.lib');
+            for (var i = 0; i < lis.length; i += 2) lis[i].style.background = 'rgba(246, 246, 246, 0.5)'
+        }
+        window.onload = bgChange;
+    </script>
+</body>
+
+</html>
+<!-- 修改图床与音乐cdn -->
